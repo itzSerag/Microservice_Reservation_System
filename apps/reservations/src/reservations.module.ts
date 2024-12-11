@@ -5,6 +5,8 @@ import { DatabaseModule } from '@app/common';
 import { ReservationRepo } from './reservation.repo';
 import { ReservationDocument, ReservationSchema } from './models/reservation.schema';
 import { LoggerModule } from '@app/common/logger/logger.module';
+import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [DatabaseModule, DatabaseModule.forFeature([{
@@ -12,7 +14,13 @@ import { LoggerModule } from '@app/common/logger/logger.module';
   }]),
     // this logger coming from common that uses pino module
     // as u know common is where everyone can use that code
-    LoggerModule
+    LoggerModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string().required()
+      })
+    })
   ],
   controllers: [ReservationsController],
   providers: [ReservationsService, ReservationRepo],
