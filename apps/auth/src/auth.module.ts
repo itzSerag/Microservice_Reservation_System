@@ -14,7 +14,8 @@ import * as Joi from 'joi';
       validationSchema: Joi.object({
         MONGODB_URI: Joi.string().required(),
         JWT_SECRET: Joi.string().required(),
-        JWT_EXP: Joi.string().required()
+        JWT_EXP: Joi.string().required(),
+        PORT: Joi.number().required()
       })
 
     }),
